@@ -1,0 +1,77 @@
+﻿@model List<SE_Project.Models.HardwareViewList>
+
+<div>
+    <br />
+    <h2>Hardware Assets Record</h2>
+    <hr />
+
+    <div class="table">
+        <table class="EmployeeTable table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>IP Address</th>
+                    <th>Computer Name</th>
+                    <th>Equiptement Type</th>
+                    <th>Full Name</th>
+                    <th>Office</th>
+                    <th>Department</th>
+                    <th>Condition</th>
+                    <th>Computer Status</th>
+                    @if (Session["UserRole"].ToString() == "Admin")
+                    {
+                        <th></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                                <tr>
+                                    <td>@item.IpAddress</td>
+                                    <td>@item.ComputerName</td>
+                                    <td>@item.EquipmentType</td>
+                                    <td>@item.FullName</td>
+                                    <td>@item.Office</td>
+                                    <td>@item.Department</td>
+                                    <td>@item.Condition</td>
+                                    <td>@item.ComputerStatus</td>
+                                    @if (Session["UserRole"].ToString() == "Admin")
+                                    {
+                                        <td><a class="btn btn-success btn-sm" href="@Url.Action("EditHardwareAssets", "Assets", new { employeeID = item.EmployeeID })"><i class="fa fa-pencil"></i> Edit</a></td>
+                                    }
+                                    </tr>
+                        }
+
+                    }
+                }
+            </tbody>
+        </table>
+        @section scripts{
+            <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+            <script src="~/Scripts/datatables.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('.EmployeeTable').DataTable()({
+                        // Set number of records to display per page
+                        'pageLength': 10,
+                        // Enable search functionality
+                        'searching': true,
+                        // Enable filtering functionality
+                        'filtering': true,
+                        language: {
+                            "emptyTable": "No Data Found, Please Click on <b>Create Computer</b> from Dropdown Computer List"
+                        },
+
+
+                        order: [[5, "asc"]]
+
+                    });
+                });
+                
+            </script>
+        }
+    </div>
+</div>

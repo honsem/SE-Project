@@ -1,0 +1,106 @@
+﻿@model IEnumerable<SE_Project.Models.SoftwareViewList>
+
+
+<div>
+    <br />
+    <h2>Hardware Assets Record</h2>
+    <hr />
+
+    <div class="table">
+        <table class="EmployeeTable table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.SerialNo)</th>
+                    <th>@Html.DisplayNameFor(model => model.SoftwareName)</th>
+                    <th>@Html.DisplayNameFor(model => model.PurchaseDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.ExpiryDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.Cost)</th>
+                    <th>@Html.DisplayNameFor(model => model.Vendor)</th>
+                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Department)</th>
+                    <th>@Html.DisplayNameFor(model => model.Office)</th>
+                    <th>@Html.DisplayNameFor(model => model.EmployeeID)</th>
+                    @if (Session["UserRole"].ToString() == "Admin")
+                    {
+                        <th></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                                <tr>
+                                    <td>@item.SerialNo</td>
+                                    <td>@item.SoftwareName</td>
+                                    <td>@item.PurchaseDate</td>
+                                    <td>@item.ExpiryDate</td>
+                                    <td>@item.Cost</td>
+                                    <td>@item.Vendor</td>
+                                    <td>@item.FullName</td>
+                                    <td>@item.Department</td>
+                                    <td>@item.Office</td>
+                                    <td>@item.EmployeeID</td>
+                                    @if (Session["UserRole"].ToString() == "Admin")
+                                    {
+                                        <td><a class="btn btn-success btn-sm" href="@Url.Action("EditSoftwareAssets", "Assets", new { employeeID = item.EmployeeID })"><i class="fa fa-pencil"></i> Edit</a></td>
+                                    }
+                                    </tr>
+                        }
+
+                    }
+                }
+            </tbody>
+        </table>
+        @section scripts{
+            <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+            <script src="~/Scripts/datatables.min.js"></script>
+            <script>
+            $(document).ready(function () {
+                $('.EmployeeTable').DataTable()({
+                    // Set number of records to display per page
+                    'pageLength': 10,
+                    // Enable search functionality
+                    'searching': true,
+                    // Enable filtering functionality
+                    'filtering': true,
+                    language: {
+
+                        "emptyTable": "No Data Found, Please Click on <b>Create Computer</b> from Dropdown Computer List"
+                    },
+                    dom: "Bfrtip",
+                    buttons: [
+                        {
+                            extend: 'csv',
+                            text: '<i class="fa fa-file-text"></i> Export to CSV',
+                            filename: 'YMS Computer Asset List',
+                            titleAttr: 'Export to CSV'
+
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fa fa-print"></i> Print',
+                            filename: 'YMS Computer Asset List',
+                            titleAttr: 'Print'
+                        }
+                    ],
+                    order: [[5, "asc"]]
+
+                });
+            });
+            // Add event listener to search input
+            $('#search').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+
+            // Add event listener to filter select
+            $('#filter').on('change', function () {
+                table.column(2).search(this.value).draw();
+            });
+            </script>
+        }
+    </div>
+</div>
+

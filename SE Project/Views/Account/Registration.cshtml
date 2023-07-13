@@ -1,0 +1,78 @@
+﻿@model SE_Project.Models.RegistrationViewModel
+
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-5">
+                    <img src="~/Photos/Mazak_logo.png" alt="logo" width="400" />
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+                        @using (Html.BeginForm("Registration", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeID, new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.EmployeeID, ViewBag.EmployeeRecord as SelectList, "--------------Select-------------  \u25BC", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.EmployeeID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.UserRole, new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.UserRole, new SelectList(new[] { "Admin", "User" }), "--------------Select-------------  \u25BC", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.UserRole, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button id="registerButton" type="submit" class="btn btn-primary">Register New Account</button>
+                                </div>
+                            </div>
+                            <script>
+                                document.getElementById("registerButton").addEventListener("click", function (event) {
+                                    event.preventDefault(); // Prevent the form from submitting immediately
+                                    if (confirm("Are you sure you want to register?")) {
+                                        // User clicked "OK", so submit the form
+                                        document.forms[0].submit();
+                                    } else {
+                                        // User clicked "Cancel", so do nothing
+                                    }
+                                });
+                            </script>
+                        }
+                    </div>
+                </div>
+                <div class="text-center mt-5 text-muted">
+                    Copyright &copy; 2023 &mdash; Yamazaki Mazak Singapore Pte Ltd
+                </div>
+            </div>
+        </div>
+</div>
+</section>

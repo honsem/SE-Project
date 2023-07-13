@@ -1,0 +1,123 @@
+﻿@model SE_Project.Models.Employee
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-5">
+                    <img src="~/Photos/Mazak_logo.png" alt="logo" width="400" />
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">UPDATE USER ACCOUNT</h1>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @using (Html.BeginForm("EditOwnershipRecord", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control", @readonly = "readyonly" } })
+                                    @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>  
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            #region ViewBag
+                            List<SelectListItem> createOffice = new List<SelectListItem>();
+                            createOffice.Add(new SelectListItem { Text = "Yamazaki Mazak Singapore (YMS)", Value = "Yamazaki Mazak Singapore (YMS)" });
+                            createOffice.Add(new SelectListItem { Text = "Yamazaki Mazak Malaysia (YMM)", Value = "Yamazaki Mazak Malaysia (YMM)" });
+                            createOffice.Add(new SelectListItem { Text = "Yamazaki Mazak Vietnam (YMV)", Value = "Yamazaki Mazak Vietnam (YMV)" });
+                            createOffice.Add(new SelectListItem { Text = "Yamazaki Mazak Indonesia (YMID)", Value = "Yamazaki Mazak Indonesia (YMID)" });
+                            createOffice.Add(new SelectListItem { Text = "Yamazaki Mazak Thailand (YMT)", Value = "Yamazaki Mazak Thailand (YMT)" });
+                            #endregion
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Office, htmlAttributes: new { @class = "control-label mb-2 text-muted required-field" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Office, createOffice, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Office, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            #region ViewBag
+                            List<SelectListItem> createDept = new List<SelectListItem>();
+                            createDept.Add(new SelectListItem { Text = "Human Resourse", Value = "Human Resourse" });
+                            createDept.Add(new SelectListItem { Text = "Accounts", Value = "Accounts" });
+                            createDept.Add(new SelectListItem { Text = "Export Control", Value = "Export Control" });
+                            createDept.Add(new SelectListItem { Text = "P2 - Product Sales", Value = "P2 - Product Sales" });
+                            createDept.Add(new SelectListItem { Text = "P2 - Production Control", Value = "P2 - Production Control" });
+                            createDept.Add(new SelectListItem { Text = "P2 - Purchasing", Value = "P2 - Purchasing" });
+                            createDept.Add(new SelectListItem { Text = "P2 - Warehouse", Value = "P2 - Warehouse" });
+                            createDept.Add(new SelectListItem { Text = "P2 - Shopfloor", Value = "P2 - Shopfloor" });
+                            createDept.Add(new SelectListItem { Text = "P2 - Fabrication", Value = "P2 - Fabrication" });
+                            createDept.Add(new SelectListItem { Text = "P2 - Production Machine", Value = "P2 - Production Machine" });
+                            createDept.Add(new SelectListItem { Text = "Production Engineering", Value = "Production Engineering" });
+                            createDept.Add(new SelectListItem { Text = "Design and Development", Value = "Design and Development" });
+                            createDept.Add(new SelectListItem { Text = "P1 - Tooling", Value = "P1 - Tooling" });
+                            createDept.Add(new SelectListItem { Text = "Services", Value = "Services" });
+                            createDept.Add(new SelectListItem { Text = "Customer Satisfaction", Value = "Customer Satisfaction" });
+                            createDept.Add(new SelectListItem { Text = "Parts Center", Value = "Parts Center" });
+                            createDept.Add(new SelectListItem { Text = "QAQC", Value = "QAQC" });
+                            createDept.Add(new SelectListItem { Text = "Application", Value = "Application" });
+                            createDept.Add(new SelectListItem { Text = "Marketing", Value = "Marketing" });
+                            createDept.Add(new SelectListItem { Text = "Local Sales", Value = "Local Sales" });
+                            createDept.Add(new SelectListItem { Text = "Sales Admin", Value = "Sales Admin" });
+                            createDept.Add(new SelectListItem { Text = "R&D", Value = "R&D" });
+                            createDept.Add(new SelectListItem { Text = "MIS", Value = "MIS" });
+                            #endregion
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label mb-2 text-muted required-field  " })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Department, createDept, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button id="updateButton" type="submit" class="btn btn-primary">UPDATE INFORMATION</button>
+                                </div>
+                            </div>
+
+                            //Pop-out Confirmation Message
+                            <script>
+                                document.getElementById("updateButton").addEventListener("click", function (event) {
+                                    event.preventDefault(); // Prevent the form from submitting immediately
+                                    if (confirm("Are you confirm update?")) {
+                                        // User clicked "OK", so submit the form
+                                        document.forms[0].submit();
+                                    } else {
+                                        // User clicked "Cancel", so do nothing
+                                    }
+                                });
+                            </script>
+                        }
+                    </div>
+                </div>
+                <div class="text-center mt-5 text-muted">
+                    Copyright &copy; 2023 &mdash; Yamazaki Mazak Singapore Pte Ltd
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

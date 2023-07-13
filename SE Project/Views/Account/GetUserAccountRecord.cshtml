@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SE_Project.Models.RegistrationViewModel>
+
+<div>
+    <br />
+    <h2>User Account Record</h2>
+    <hr />
+    <div class="table">
+
+        <table class="EmployeeTable table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Email Address</th>
+                    <th>Employee ID</th>
+                    <th>User Role</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Email</td>
+                                <td>@item.EmployeeID</td>
+                                <td>@item.UserRole</td>
+                                <td>@item.IsActive</td>
+                                <td><a class="btn btn-success btn-sm" href="@Url.Action("EditUserAccountRecord", "Account", new { employeeID = item.EmployeeID })"><i class="fa fa-pencil"></i> Edit</a></td>
+                            </tr>
+                        }
+
+                    }
+                }
+            </tbody>
+        </table>
+        @section scripts{
+            <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+            <script src="~/Scripts/datatables.min.js"></script>
+            <script>
+                    $(document).ready(function () {
+                        $('.EmployeeTable').DataTable()({
+                            // Set number of records to display per page
+                            'pageLength': 10,
+                            // Enable search functionality
+                            'searching': true,
+                            // Enable filtering functionality
+                            'filtering': true,
+                            language: {
+
+                                "emptyTable": "No Data Found, Please Click on <b>Create Computer</b> from Dropdown Computer List"
+                            },
+                            dom: "Bfrtip"
+
+                        });
+                    });
+            </script>
+        }
+    </div>
+</div>
+

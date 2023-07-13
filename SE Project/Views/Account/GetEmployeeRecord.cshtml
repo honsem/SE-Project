@@ -1,0 +1,74 @@
+﻿@model List<SE_Project.Models.Employee>
+
+
+<div>
+    <br />
+    <h2>Employee/Ownership Record</h2>
+    <hr />
+    <div class="table">
+
+        <table class="EmployeeTable table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Office</th>
+                    <th>Department</th>
+                    @if (Session["UserRole"].ToString() == "Admin")
+                    {
+                        <th></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                                <tr>
+                                    <td>@item.EmployeeID</td>
+                                    <td>@item.FirstName</td>
+                                    <td>@item.LastName</td>
+                                    <td>@item.Office</td>
+                                    <td>@item.Department</td>
+                                    @if (Session["UserRole"].ToString() == "Admin")
+                                    {
+                                        <td>
+                                            <a class="btn btn-success btn-sm" href="@Url.Action("EditOwnershipRecord", "Account", new { employeeID = item.EmployeeID })">
+                                                <i class="fa fa-pencil"></i> Edit
+                                            </a>
+                                        </td>
+                                    }
+                                </tr>
+                        }
+
+                    }
+                }
+            </tbody>
+        </table>
+        @section scripts{
+            <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+            <script src="~/Scripts/datatables.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('.EmployeeTable').DataTable()({
+                        // Set number of records to display per page
+                        'pageLength': 10,
+                        // Enable search functionality
+                        'searching': true,
+                        // Enable filtering functionality
+                        'filtering': true,
+                        language: {
+
+                            "emptyTable": "No Data Found, Please Click on <b>Create Computer</b> from Dropdown Computer List"
+                        },
+                        dom: "Bfrtip"
+                    });
+                });
+            </script>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,112 @@
+﻿@using SE_Project.Models;
+
+@{
+    List<HardwareStatusReportView> hardwareAssetsReport = ViewBag.HardwareAssetsReport;
+    List<EquipmentTypeReportView> equipmentTypeReport = ViewBag.EquipmentTypeReport;
+    string serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(hardwareAssetsReport);
+    string serializedEquipmentTypeData = Newtonsoft.Json.JsonConvert.SerializeObject(equipmentTypeReport);
+}
+
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+@if (TempData.ContainsKey("SuccessMessage"))
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+<br />
+<br />
+@section scripts{
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script>
+        var hardwareAssetsData = @Html.Raw(serializedData);
+        var equipmentTypeData = @Html.Raw(serializedEquipmentTypeData);
+
+        window.onload = function () {
+
+            // Calculate the total quantity
+            var hardwareTotalQuantity = hardwareAssetsData.reduce(function (accumulator, item) {
+                return accumulator + item.hardwareTotalQty;
+            }, 0);
+
+            // Define the options for the doughnut chart
+            var options = {
+                animationEnabled: true,
+                title: {
+                    text: "Quantity of Equipments Types"
+                },
+                data: [{
+                    type: "doughnut",
+                    innerRadius: "40%",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    indexLabel: "{label}: #percent%",
+                    dataPoints: hardwareAssetsData.map(function (item) {
+                        return { label: item.computerStatus, y: item.hardwareTotalQty };
+                    })
+                }],
+                subtitles: [{
+                    text: hardwareTotalQuantity,
+                    verticalAlign: "center",
+                    fontSize: 28,
+                    dockInsidePlotArea: true
+                }]
+            };
+
+            // Render the doughnut chart
+            $("#hardwareAssetsDataContainer").CanvasJSChart(options);
+
+
+            // Calculate the total quantity
+            var equipmentTotalQuantity = equipmentTypeData.reduce(function (accumulator, item) {
+                return accumulator + item.equipmentTotalQty;
+            }, 0);
+
+            // Define the doughnutOptions
+            var doughnutOptions = {
+                animationEnabled: true,
+                title: {
+                    text: "Equipment Type Distribution"
+                },
+                data: [
+                    {
+                        type: "doughnut",
+                        innerRadius: "40%",
+                        showInLegend: true,
+                        legendText: "{label}",
+                        indexLabel: "{label}: #percent%",
+                        dataPoints: equipmentTypeData.map(function (item) {
+                            return { y: item.equipmentTotalQty, label: item.equipmentType };
+                        })
+                    }
+                ],
+                subtitles: [{
+                    text: equipmentTotalQuantity,
+                    verticalAlign: "center",
+                    fontSize: 28,
+                    dockInsidePlotArea: true
+                }]
+            };
+
+            // Render the doughnut chart
+            $("#equipmentTypeDataContainer").CanvasJSChart(doughnutOptions);
+        };
+
+        function getTotalQuantity(dataPoints) {
+            var totalQuantity = 0;
+            for (var i = 0; i < dataPoints.length; i++) {
+                totalQuantity += dataPoints[i].y;
+            }
+            return totalQuantity;
+        }
+
+    </script>
+}
+
+<div id="hardwareAssetsDataContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<br />
+<hr />
+<br />
+<div id="equipmentTypeDataContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>

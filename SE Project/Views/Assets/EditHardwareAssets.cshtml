@@ -1,0 +1,187 @@
+﻿@model SE_Project.Models.Edit_Hardware_Ownership_View
+
+
+@Html.AntiForgeryToken()
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-5">
+                    <img src="~/Photos/Mazak_logo.png" alt="logo" width="400" />
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">Edit Hardware Assets</h1>
+                        <hr />
+                        <div class="form-horizontal">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @using (Html.BeginForm("EditHardwareAssets", "Assets", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SerialNo, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.SerialNo, new { htmlAttributes = new { @class = "form-control", @readonly = "readyonly" } })
+                                        @Html.ValidationMessageFor(model => model.SerialNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.IpAddress, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.IpAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.IpAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.MacAddress, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.MacAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MacAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ComputerName, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ComputerName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ComputerName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ComputerModel, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ComputerModel, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ComputerModel, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                #region ViewBag
+                                List<SelectListItem> createOS = new List<SelectListItem>();
+                                createOS.Add(new SelectListItem { Text = "Windows 11 Pro", Value = "Windows 11 Pro" });
+                                createOS.Add(new SelectListItem { Text = "Windows 11 Home", Value = "Windows 11 Home" });
+                                createOS.Add(new SelectListItem { Text = "Windows 10 Pro", Value = "Windows 10 Pro" });
+                                createOS.Add(new SelectListItem { Text = "Windows 10 Home", Value = "Windows 10 Home" });
+                                createOS.Add(new SelectListItem { Text = "Windows 8.1 Pro", Value = "Windows 8.1 Pro" });
+                                createOS.Add(new SelectListItem { Text = "Windows 7 Pro", Value = "Windows 7 Pro" });
+                                createOS.Add(new SelectListItem { Text = "Windows 7 Home", Value = "Windows 7 Home" });
+                                createOS.Add(new SelectListItem { Text = "Windows XP", Value = "Windows XP" });
+                                createOS.Add(new SelectListItem { Text = "Windows 2000", Value = "Windows 2000" });
+                                createOS.Add(new SelectListItem { Text = "Windows Server 2022", Value = "Windows Server 2022" });
+                                createOS.Add(new SelectListItem { Text = "Windows Server 2019", Value = "Windows Server 2019" });
+                                createOS.Add(new SelectListItem { Text = "Windows Server 2016", Value = "Windows Server 2016" });
+                                createOS.Add(new SelectListItem { Text = "Windows Server 2012 R2", Value = "Windows Server 2012 R2" });
+                                createOS.Add(new SelectListItem { Text = "Windows Server 2008", Value = "Windows Server 2008" });
+                                createOS.Add(new SelectListItem { Text = "Andriod", Value = "Andriod" });
+                                createOS.Add(new SelectListItem { Text = "Apple ISO", Value = "Apple ISO" });
+                                createOS.Add(new SelectListItem { Text = "Linux Ubuntu", Value = "Linux Ubuntu" });
+                                createOS.Add(new SelectListItem { Text = "Linux Centos", Value = "Linux Centos" });
+                                #endregion
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ComputerOS, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.ComputerOS, createOS, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ComputerOS, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                #region ViewBag
+                                List<SelectListItem> createEquipment = new List<SelectListItem>();
+                                createEquipment.Add(new SelectListItem { Text = "Desktop", Value = "Desktop" });
+                                createEquipment.Add(new SelectListItem { Text = "Laptop", Value = "Laptop" });
+                                createEquipment.Add(new SelectListItem { Text = "All-in-One (AIO)", Value = "All-in-One (AIO)" });
+                                createEquipment.Add(new SelectListItem { Text = "Copier Machine", Value = "Copier Machine" });
+                                createEquipment.Add(new SelectListItem { Text = "USB Device", Value = "USB Device" });
+                                createEquipment.Add(new SelectListItem { Text = "Numpad USB Device", Value = "Numpad USB Device" });
+                                createEquipment.Add(new SelectListItem { Text = "HDD/SSD", Value = "HDD/SSD" });
+                                createEquipment.Add(new SelectListItem { Text = "CCTVs", Value = "CCTVs" });
+                                createEquipment.Add(new SelectListItem { Text = "IP Phone", Value = "IP Phone" });
+                                createEquipment.Add(new SelectListItem { Text = "Server", Value = "Server" });
+                                createEquipment.Add(new SelectListItem { Text = "NAS (Synology/QNAP)", Value = "NAS (Synology/QNAP)" });
+                                createEquipment.Add(new SelectListItem { Text = "Machine", Value = "Machine" });
+                                #endregion
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.EquipmentType, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.EquipmentType, createEquipment, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.EquipmentType, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control", @readonly = "readyonly" } })
+                                        @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                #region ViewBag
+                                List<SelectListItem> assetStatus = new List<SelectListItem>();
+                                assetStatus.Add(new SelectListItem { Text = "ASSIGNED", Value = "ASSIGNED" });
+                                assetStatus.Add(new SelectListItem { Text = "RETURNED", Value = "RETURNED" });
+                                assetStatus.Add(new SelectListItem { Text = "MAINTENANCE", Value = "MAINTENANCE" });
+                                assetStatus.Add(new SelectListItem { Text = "IN-STOCK", Value = "IN-STOCK" });
+                                assetStatus.Add(new SelectListItem { Text = "PENDING DISPOSAL", Value = "PENDING DISPOSAL" });
+                                assetStatus.Add(new SelectListItem { Text = "DISPOSED", Value = "DISPOSED" });
+                                #endregion
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ComputerStatus, htmlAttributes: new { @class = "control - label mb - 2 text - muted" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.ComputerStatus, assetStatus, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ComputerStatus, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                #region ViewBag
+                                List<SelectListItem> assetCondition = new List<SelectListItem>();
+                                assetCondition.Add(new SelectListItem { Text = "GOOD", Value = "GOOD" });
+                                assetCondition.Add(new SelectListItem { Text = "REFURBISHED", Value = "REFURBISHED" });
+                                assetCondition.Add(new SelectListItem { Text = "OBSOLETE", Value = "OBSOLETE" });
+                                assetCondition.Add(new SelectListItem { Text = "MALFUNCTION", Value = "MALFUNCTION" });
+                                assetCondition.Add(new SelectListItem { Text = "DAMAGED", Value = "DAMAGED" });
+                                assetCondition.Add(new SelectListItem { Text = "SPOILT", Value = "SPOILT" });
+                                #endregion
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Condition, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.Condition, assetCondition, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Condition, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button id="updateButton" type="submit" class="btn btn-primary">UPDATE INFORMATION</button>
+                                    </div>
+                                </div>
+
+                                //Pop-out Confirmation Message
+                                <script>
+                                    document.getElementById("updateButton").addEventListener("click", function (event) {
+                                        event.preventDefault(); // Prevent the form from submitting immediately
+                                        if (confirm("Are you confirm update?")) {
+                                            // User clicked "OK", so submit the form
+                                            document.forms[0].submit();
+                                        } else {
+                                            // User clicked "Cancel", so do nothing
+                                        }
+                                    });
+                                </script>
+                            }
+                        </div>           
+                        </div>
+                        <div class="text-center mt-5 text-muted">
+                            Copyright &copy; 2023 &mdash; Yamazaki Mazak Singapore Pte Ltd
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+

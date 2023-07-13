@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/datatables.min.css" rel="stylesheet" />
+    <link href="~/Content/Jquery-ui/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    @if (Session["UserRole"] != null && Session["UserRole"].ToString() == "Admin")
+    {
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+
+            <div class="container">
+                <div class="navbar-brand">
+                    @Html.ActionLink("Yamazaki Mazak Singapore", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse" id="navbarNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Index">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+                                Hardware
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Assets/CreateHardwareAssets">Create New Computer</a></li>
+                                <li><a class="dropdown-item" href="/Assets/HardwareOwnership">Hardware Ownerhsip</a></li>
+                                <li><a class="dropdown-item" href="/Assets/GetHardwareAssets">View List</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+                                Software
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Assets/CreateSoftwareAssets">Create New Software</a></li>
+                                <li><a class="dropdown-item" href="/Assets/GetSoftwareAssets">View List</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+                                User Control
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Account/CreateEmployeeRecord">Create Employee/Ownership</a></li>
+                                <li><a class="dropdown-item" href="/Account/Registration">Create User Account</a></li>
+                                <li><a class="dropdown-item" href="/Account/GetEmployeeRecord">View Employee/Ownership List</a></li>
+                                <li><a class="dropdown-item" href="/Account/GetUserAccountRecord">View Account List</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item dropdown" aria-labelledby="navbarDropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false">Profile</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("ViewOwnershipRecord", "Account", new { employeeID = Session["EmployeeID"] })">View Profile</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("ChangePassword", "Account", new { employeeID = Session["EmployeeID"] })">Reset Password</a></li>
+                                <li><a class="dropdown-item" href="/Account/Logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    }
+    else if (Session["UserRole"] != null && Session["UserRole"].ToString() == "User")
+    {
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+
+            <div class="container">
+                <div class="navbar-brand">
+                    @Html.ActionLink("Yamazaki Mazak Singapore", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                </div>
+                <div class="navbar-collapse collapse" id="navbarNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Index"x>Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+                                Hardware
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Assets/GetHardwareAssets">View List</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+                                Software
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Assets/GetSoftwareAssets">View List</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+                                Employee
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Account/GetEmployeeRecord">View List</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item dropdown" aria-labelledby="navbarDropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false">Profile</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("ViewOwnershipRecord", "Account", new { employeeID = Session["EmployeeID"] })">View Profile</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("ChangePassword", "Account", new { employeeID = Session["EmployeeID"] })">Reset Password</a></li>
+                                <li><a class="dropdown-item" href="/Account/Logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    }
+    <div class="container body-content">
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Yamazaki Mazak Singapore Pte Ltd</p>
+        </footer>
+    </div>
+
+    
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/datatables.min.js"></script>
+    <script src="~/Scripts/jquery-3.6.4.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

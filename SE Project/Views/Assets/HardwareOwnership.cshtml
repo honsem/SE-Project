@@ -1,0 +1,95 @@
+﻿@model SE_Project.Models.Hardware_Ownership
+
+@Html.AntiForgeryToken()
+
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-5">
+                    <img src="~/Photos/Mazak_logo.png" alt="logo" width="400" />
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">Hardware Ownership</h1>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @using (Html.BeginForm("HardwareOwnership", "Assets", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SerialNo, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.SerialNo, ViewBag.ComputerRecord as SelectList, "--------------Select-------------  \u25BC", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.SerialNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.EmployeeID, ViewBag.EmployeeRecord as SelectList, "--------------Select-------------  \u25BC", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            #region ViewBag
+                                List<SelectListItem> assetStatus = new List<SelectListItem>();
+                                assetStatus.Add(new SelectListItem { Text = "ASSIGNED", Value = "ASSIGNED" });
+                                assetStatus.Add(new SelectListItem { Text = "RETURNED", Value = "RETURNED" });
+                                assetStatus.Add(new SelectListItem { Text = "MAINTENANCE", Value = "MAINTENANCE" });
+                                assetStatus.Add(new SelectListItem { Text = "IN-STOCK", Value = "IN-STOCK" });
+                                assetStatus.Add(new SelectListItem { Text = "PENDING DISPOSAL", Value = "PENDING DISPOSAL" });
+                                assetStatus.Add(new SelectListItem { Text = "DISPOSED", Value = "DISPOSED" });
+                            #endregion
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ComputerStatus, htmlAttributes: new { @class = "control - label mb - 2 text - muted" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.ComputerStatus, assetStatus, "--------------Select-------------  \u25BC", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ComputerStatus, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            #region ViewBag
+                                List<SelectListItem> assetCondition = new List<SelectListItem>();
+                                assetCondition.Add(new SelectListItem { Text = "GOOD", Value = "GOOD" });
+                                assetCondition.Add(new SelectListItem { Text = "REFURBISHED", Value = "REFURBISHED" });
+                                assetCondition.Add(new SelectListItem { Text = "OBSOLETE", Value = "OBSOLETE" });
+                                assetCondition.Add(new SelectListItem { Text = "MALFUNCTION", Value = "MALFUNCTION" });
+                                assetCondition.Add(new SelectListItem { Text = "DAMAGED", Value = "DAMAGED" });
+                                assetCondition.Add(new SelectListItem { Text = "SPOILT", Value = "SPOILT" });
+                            #endregion
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Condition, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.Condition, assetCondition, "--------------Select-------------  \u25BC", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Condition, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button id="registerButton" type="submit" class="btn btn-primary">Register Ownership</button>
+                                </div>
+                            </div>
+
+                            //Pop-out Confirmation Message
+                            <script>
+                                    document.getElementById("registerButton").addEventListener("click", function (event) {
+                                        event.preventDefault(); // Prevent the form from submitting immediately
+                                        if (confirm("Are you sure you want to register?")) {
+                                            // User clicked "OK", so submit the form
+                                            document.forms[0].submit();
+                                        } else {
+                                            // User clicked "Cancel", so do nothing
+                                        }
+                                    });
+                            </script>
+                        }
+                    </div>
+            </div>
+            <div class="text-center mt-5 text-muted">
+                Copyright &copy; 2023 &mdash; Yamazaki Mazak Singapore Pte Ltd
+            </div>
+        </div>
+    </div>
+    </div>
+</section>

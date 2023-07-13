@@ -1,0 +1,84 @@
+﻿@model SE_Project.Models.LoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Login Page</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <section class="h-100">
+        <div class="container h-100">
+            <div class="row justify-content-sm-center h-100">
+                <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                    <div class="text-center my-5">
+                        <img src="~/Photos/Mazak_logo.png" alt="logo" width="400" />
+                    </div>
+                    <div class="card shadow-lg">
+                        <div class="card-body p-5">
+                            @if (TempData.ContainsKey("ErrorMessage"))
+                            {
+                                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                            }
+                            @if (TempData.ContainsKey("SuccessMessage"))
+                            {
+                                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                            }
+                            <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Email, new { @class = "control-label mb-2 text-muted" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Password, new { @class = "control-label mb-2 text-mute" })
+                                    <div class="col-md-10">
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <p>
+                                    @Html.ActionLink("Forgot Password?", "ForgotPassword", "Account")
+                                </p>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-primary ms-auto">
+                                            Login
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="text-center mt-5 text-muted">
+                            Copyright &copy; 2023 &mdash; Yamazaki Mazak Singapore Pte Ltd
+                        </div>
+                        <script type="text/javascript">
+                            (function () {
+                                if (window.history && window.history.pushState) {
+                                    window.history.pushState(null, null, null);
+                                    window.addEventListener('popstate', function () {
+                                        window.history.pushState(null, null, null);
+                                    });
+                                }
+                            })();
+                        </script>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+

@@ -1,0 +1,135 @@
+﻿@model SE_Project.Models.SoftwareAssets
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<script src="~/Content/Jquery-ui/jquery-ui.min.js"></script>
+<link href="~/Content/Jquery-ui/jquery-ui.theme.min.css" rel="stylesheet" />
+
+
+@Html.AntiForgeryToken()
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-5">
+                    <img src="~/Photos/Mazak_logo.png" alt="logo" width="400" />
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">Create Software Assets</h1>
+                        <hr />
+                        @using (Html.BeginForm("CreateSoftwareAssets", "Assets", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SerialNo, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.SerialNo, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SerialNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SoftwareName, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.SoftwareName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SoftwareName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.PurchaseDate, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.PurchaseDate, new { htmlAttributes = new { @class = "form-control", @id = "PurchaseDate", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.PurchaseDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control", @id = "ExpiryDate", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10 input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">SGD $</span>
+                                    </div>
+                                    @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01" } })
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Vendor, htmlAttributes: new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Vendor, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Vendor, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeID, new { @class = "control-label mb-2 text-muted" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.EmployeeID, ViewBag.EmployeeRecord as SelectList, "--------------Select-------------  \u25BC", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.EmployeeID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button id="registerButton" type="submit" class="btn btn-primary">Register New Hardware</button>
+                                </div>
+                            </div>
+
+                            //Pop-out Confirmation Message
+                            <script>
+                                document.getElementById("registerButton").addEventListener("click", function (event) {
+                                    event.preventDefault(); // Prevent the form from submitting immediately
+                                    if (confirm("Are you sure you want to register?")) {
+                                        // User clicked "OK", so submit the form
+                                        document.forms[0].submit();
+                                    } else {
+                                        // User clicked "Cancel", so do nothing
+                                    }
+                                });
+                            </script>
+                        }
+                    </div>
+                </div>
+                @section scripts{
+                    <script src="~/Scripts/jquery-3.6.4.min.js"></script>
+                    <script src="~/Content/Jquery-ui/jquery-ui.min.js"></script>
+                    <script>
+                        $(function () {
+                            $("#PurchaseDate").datepicker({
+                                dateFormat: "yy-mm-dd",
+                                changeMonth: true,
+                                changeYear: true
+                            });
+                        })
+                    </script>
+
+                    <script>
+                        $(function () {
+                            $("#ExpiryDate").datepicker({
+                                dateFormat: "yy-mm-dd",
+                                changeMonth: true,
+                                changeYear: true
+                            });
+                        })
+                    </script>
+                }
+                <div class="text-center mt-5 text-muted">
+                    Copyright &copy; 2023 &mdash; Yamazaki Mazak Singapore Pte Ltd
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
